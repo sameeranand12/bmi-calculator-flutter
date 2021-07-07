@@ -1,5 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 const bottomContainerHeight = 80.0;
 const colorHexCode = 0xFF1D1E33;
 const bottomContainerColor = 0xFFEB1555;
@@ -23,6 +24,22 @@ class _InputPageState extends State<InputPage> {
                   Expanded(
                     child: ReusableCard(
                       colour: Color(colorHexCode),
+                      cardChild: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                             FontAwesomeIcons.mars,
+                            size: 80.0,
+                          ),
+                           SizedBox(
+                             height: 15.0,
+                           ),
+                          Text('MALE' ,style: TextStyle(
+                            fontSize: 18.0, color : Color(0xFF8D8E98),
+                          ),)
+                        ],
+
+                      ),
                     ),
                   ),
                   Expanded(
@@ -70,11 +87,13 @@ class ReusableCard extends StatelessWidget {
 //we have created the colour constructor so that we can pass on different colours to our cards.
 
 //@required we can make the property compulsory
-  ReusableCard({@required this.colour});
+  ReusableCard({@required this.colour , this.cardChild});
   final Color colour;
+  final Widget cardChild;
   @override
   Widget build(BuildContext context) {
     return Container(
+      child: cardChild,
       margin: EdgeInsets.all(15.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
