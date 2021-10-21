@@ -3,17 +3,12 @@ import 'package:flutter/material.dart';
 import 'icon_content.dart';
 import 'reusable_card.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'constants.dart';
 
-
-const bottomContainerHeight = 80.0;
-const activeCardColour = Color(0xFF1D1E33);
-const inactiveCardColour = Color(0xFF111328);
-const bottomContainerColor = 0xFFEB1555;
-enum Gender{
+enum Gender {
   male,
   female,
 }
-
 
 class InputPage extends StatefulWidget {
   @override
@@ -21,87 +16,126 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
-
   Gender selectedGender;
-
-
+  int height = 180;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Center(child: Text('BMI CALCULATOR')),
-        ),
-        body: Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: ReusableCard(
-                      onPress: (){
-                        setState(() {
-                          selectedGender = Gender.male;
-                        });
-                      },
-                      colour:selectedGender == Gender.male ? activeCardColour : inactiveCardColour,
-                      cardChild: IconContent(icon: FontAwesomeIcons.mars,
-                                             label : 'MALE',
-                      ),
+      appBar: AppBar(
+        title: Center(child: Text('BMI CALCULATOR')),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: Row(
+              children: [
+                Expanded(
+                  child: ReusableCard(
+                    onPress: () {
+                      setState(() {
+                        selectedGender = Gender.male;
+                      });
+                    },
+                    colour: selectedGender == Gender.male
+                        ? kActiveCardColour
+                        : kInactiveCardColour,
+                    cardChild: IconContent(
+                      icon: FontAwesomeIcons.mars,
+                      label: 'MALE',
                     ),
                   ),
-                  Expanded(
-                    child: ReusableCard(
-                      onPress: (){
-                        setState(() {
-                          selectedGender = Gender.female;
-                        });
-                      },
-                      colour: selectedGender == Gender.female ? activeCardColour: inactiveCardColour,
-                      cardChild: IconContent(
-                        icon: FontAwesomeIcons.female,
-                        label: 'FEMALE',
-                      ),
+                ),
+                Expanded(
+                  child: ReusableCard(
+                    onPress: () {
+                      setState(() {
+                        selectedGender = Gender.female;
+                      });
+                    },
+                    colour: selectedGender == Gender.female
+                        ? kActiveCardColour
+                        : kInactiveCardColour,
+                    cardChild: IconContent(
+                      icon: FontAwesomeIcons.female,
+                      label: 'FEMALE',
                     ),
-                  )
+                  ),
+                )
+              ],
+            ),
+          ),
+          Expanded(
+            child: ReusableCard(
+              colour: kInactiveCardColour,
+              cardChild: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'HEIGHT',
+                    style: kLabelTextStyle,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Text(height.toString(), style: kNumberTextStyle),
+                      Text(
+                        'cm',
+                        style: kLabelTextStyle,
+                      )
+                    ],
+                  ),
+                  Slider(
+                    value: height.toDouble(),
+                    activeColor: Color(0xFFEB1555),
+                    inactiveColor: Color(0xFF8D8E98),
+                    min: 120.0,
+                    max: 220.0,
+                    onChanged: (double newValue) {
+                      setState(() {
+                        height = newValue.round();
+                      });
+
+                      // print(newValue);
+                    },
+                  ),
                 ],
               ),
             ),
-            Expanded(
-              child: ReusableCard(
-                colour: inactiveCardColour,
-              ),
-            ),
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: ReusableCard(
-                      colour: inactiveCardColour,
-                    ),
+          ),
+          Expanded(
+            child: Row(
+              children: [
+                Expanded(
+                  child: ReusableCard(
+                    colour: kInactiveCardColour,
                   ),
-                  Expanded(
-                    child: ReusableCard(colour: Colors.blue),
-                  )
-                ],
-              ),
+                ),
+                Expanded(
+                  child: ReusableCard(colour: kInactiveCardColour),
+                )
+              ],
             ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: Color(bottomContainerColor),
-              ),
-              margin: EdgeInsets.only(top: 10.0),
-              width: double.infinity,
-              height: bottomContainerHeight,
-            )
-          ],
-        ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+              color: Color(kBottomContainerColor),
+            ),
+            margin: EdgeInsets.only(top: 10.0),
+            width: double.infinity,
+            height: kBottomContainerHeight,
+          )
+        ],
+      ),
     );
   }
 }
-///gdccvv
 
+///gdccvv
 
 ///sfweefef
 // Color maleCardColour = inactiveCardColour;
@@ -125,4 +159,3 @@ class _InputPageState extends State<InputPage> {
 //       }
 //   }
 //   }
-
