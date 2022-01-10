@@ -1,10 +1,14 @@
 import 'package:bmi_calculator/Components/round_icon_button.dart';
+import 'package:bmi_calculator/Components/bottom_button.dart';
+import 'package:bmi_calculator/calculator_brain.dart';
+import 'package:bmi_calculator/screens/results.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'icon_content.dart';
-import 'reusable_card.dart';
+import '../Components/icon_content.dart';
+import '../Components/reusable_card.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'constants.dart';
+import '../Components/constants.dart';
 
 enum Gender {
   male,
@@ -93,16 +97,16 @@ class _InputPageState extends State<InputPage> {
                   ),
                   SliderTheme(
                     data: SliderTheme.of(context).copyWith(
-                      inactiveTickMarkColor: Color(0xFF8D8E98),
-                      activeTrackColor: Color(0xFFEB1555),
-                      thumbColor: Color(0xFFEB1555),
-                      overlayColor: Color(0x29EB1555),
-                      thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15.0),
-                      overlayShape: RoundSliderOverlayShape(overlayRadius: 30.0)
-                    ),
+                        inactiveTickMarkColor: Color(0xFF8D8E98),
+                        activeTrackColor: Color(0xFFEB1555),
+                        thumbColor: Color(0xFFEB1555),
+                        overlayColor: Color(0x29EB1555),
+                        thumbShape:
+                            RoundSliderThumbShape(enabledThumbRadius: 15.0),
+                        overlayShape:
+                            RoundSliderOverlayShape(overlayRadius: 30.0)),
                     child: Slider(
                       value: height.toDouble(),
-
                       min: 120.0,
                       max: 220.0,
                       onChanged: (double newValue) {
@@ -183,7 +187,7 @@ class _InputPageState extends State<InputPage> {
                               icon: FontAwesomeIcons.minus,
                               onPressed: () {
                                 setState(
-                                      () {
+                                  () {
                                     age--;
                                   },
                                 );
@@ -208,22 +212,31 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.0),
-              color: Color(kBottomContainerColor),
-            ),
-            margin: EdgeInsets.only(top: 10.0),
-            width: double.infinity,
-            height: kBottomContainerHeight,
+          BottomButton(
+            onTap: () {
+              CalculatorBrain calc =
+                  CalculatorBrain(height: height, weight: weight);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ResultPage(
+
+                    interpretation: calc.getInterpretation(),
+                    bmiResult: calc.calculateBMI(),
+                    resultText: calc.getResult(),
+                  ),
+                ),
+              );
+              // MaterialPageRoute(builder: (context)=>ResultPage()),
+              // );
+            },
+            buttonTitle: 'CALCULATE',
           )
         ],
       ),
     );
   }
 }
-
-
 
 ///gdccvv
 
